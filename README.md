@@ -1,5 +1,9 @@
 # 💬 概述
 
+**(正在重构中)**
+
+使用 Golang + Astro + React 重构替换 Next.js
+
 一款简洁高效的在线工具箱
 
 - [x] JSON 在线解析及格式化验证
@@ -9,24 +13,19 @@
 
 ## 🚀 本地运行
 
-1. 克隆仓库：
+```shell
+# 安装 bun
+brew install oven-sh/bun/bun
 
-```sh
-git clone https://github.com/sunls24/online-tools
+# 前端打包
+cd web && bun install && bun run build && cd -
+
+# 运行
+go run cmd/main.go
 ```
 
-2. 安装依赖项：
+## sqlc 生成数据库模型
 
-```bash
-pnpm install
+```shell
+go generate ./internal/sqlc
 ```
-
-3. 本地运行：
-
-```bash
-pnpm dev
-```
-
-## ☁️ 使用 Vercel 部署
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fsunls24%2Fonline-tools)
