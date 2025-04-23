@@ -1,0 +1,15 @@
+---
+import Title from "@/components/Title.astro"
+import EncodeB64 from "@/components/tsx/EncodeB64"
+import Layout from "@/layouts/Layout.astro"
+import { getTool } from "@/lib/tools"
+
+const tool = getTool("/base64")
+---
+
+<Layout tool={tool}>
+  <div class="container max-w-3xl">
+    {tool && <Title tool={tool} />}
+    <EncodeB64 client:load />
+  </div>
+</Layout>
