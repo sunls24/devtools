@@ -1,0 +1,40 @@
+---
+import Layout from "@/layouts/Layout.astro"
+import { tools } from "@/lib/tools"
+import { ExternalLink, Zap } from "lucide-react"
+---
+
+<Layout>
+  <div class="mx-auto w-5/6 max-w-3xl py-6">
+    {
+      tools.map((category) => (
+        <div class="overflow-hidden rounded-sm border font-semibold">
+          <div class="bg-sidebar/50 flex items-center gap-1 border-b p-2">
+            <Zap size={18} />
+            {category.name}
+          </div>
+          <div class="grid grid-cols-1 gap-4 p-4 sm:grid-cols-3">
+            {category.list.map((item) => (
+              <a
+                href={item.route}
+                class="hover:bg-sidebar rounded-sm border p-4 shadow-xs transition hover:scale-[1.02] hover:shadow-sm"
+              >
+                <div class="flex items-center gap-2">
+                  <img
+                    src={item.image}
+                    class="h-6"
+                    alt={item.name}
+                    draggable={false}
+                  />
+                  <span class="text-sm">{item.name}</span>
+                  <span class="flex-1" />
+                  <ExternalLink size={16} />
+                </div>
+              </a>
+            ))}
+          </div>
+        </div>
+      ))
+    }
+  </div>
+</Layout>
