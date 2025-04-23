@@ -1,0 +1,8 @@
+---
+const { tool } = Astro.props
+---
+
+<div class="flex w-fit items-center gap-2 pl-2 font-medium">
+  <img src={tool.image} class="h-5" alt={tool.name} draggable={false} />
+  {tool.name}
+</div>

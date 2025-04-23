@@ -1,0 +1,33 @@
+---
+import ThemeIcon from "@/components/ThemeIcon.astro"
+import { Button } from "@/components/ui/button"
+import { VERSION } from "@/lib/constants"
+import { DraftingCompass, Github } from "lucide-react"
+---
+
+<div class="bg-sidebar border-b py-4 shadow-xs">
+  <div class="mx-auto flex w-5/6 max-w-3xl items-center px-2">
+    <a href="/" class="flex items-center gap-1 font-medium">
+      <DraftingCompass size={22} />
+      <span>百宝箱</span>
+      <sup>OL</sup>
+    </a>
+    <div class="flex-1"></div>
+    <ThemeIcon />
+    <Button
+      id="github"
+      variant="ghost"
+      className="gap-1 underline underline-offset-4 has-[>svg]:px-2"
+    >
+      <Github />
+      {VERSION}
+    </Button>
+  </div>
+</div>
+
+<script>
+  import { GITHUB_URL } from "@/lib/constants"
+  document
+    .getElementById("github")
+    ?.addEventListener("click", () => open(GITHUB_URL))
+</script>
