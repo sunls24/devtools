@@ -11,8 +11,8 @@ import (
 
 type Context struct {
 	echo.Context
-	*config.Config
-	*openai.OpenAI
+	cfg *config.Config
+	oai *openai.OpenAI
 }
 
 func Middleware(cfg *config.Config) echo.MiddlewareFunc {

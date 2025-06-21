@@ -1,7 +1,8 @@
 import { Button } from "@/components/ui/button.tsx"
 import { Input } from "@/components/ui/input.tsx"
+import { respData } from "@/lib/utils"
 import { CronExpressionParser } from "cron-parser"
-import { Calculator, Timer } from "lucide-react"
+import { Atom, Calculator, Timer } from "lucide-react"
 import React, { useState } from "react"
 import { toast } from "sonner"
 
@@ -9,8 +10,10 @@ function TCrontab() {
   const [input, setInput] = useState("")
   const [list, setList] = useState<string[]>([])
 
-  function onClick() {
-    const expr = input.trim()
+  const [loading, setLoading] = useState(false)
+
+  function onClick(data?: string) {
+    const expr = (data ?? input).trim()
     if (!expr) {
       return
     }
@@ -22,6 +25,22 @@ function TCrontab() {
         description: err.message ?? err,
       })
     }
+  }
+
+  function onAIClick() {
+    const desc = input.trim()
+    if (!desc) {
+      return
+    }
+    setLoading(true)
+    fetch(`/api/crontab?desc=${desc}`)
+      .then(respData)
+      .then((data) => {
+        setInput(data)
+        onClick(data)
+      })
+      .catch((err) => toast.error(err.message ?? err))
+      .finally(() => setLoading(false))
   }
 
   function onKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
@@ -37,14 +56,18 @@ function TCrontab() {
       <div className="flex flex-col gap-3 sm:flex-row">
         <Input
           value={input}
+          disabled={loading}
           onKeyDown={onKeyDown}
           className="font-mono"
           onChange={(e) => setInput(e.currentTarget.value)}
-          placeholder="请输入 Crontab 表达式"
-        ></Input>
-        <Button variant="secondary" onClick={onClick}>
+          placeholder="Crontab 表达式 / 每两小时执行一次"
+        />
+        <Button onClick={() => onClick()} disabled={loading}>
           <Calculator />
           计算执行时间
+        </Button>
+        <Button variant="secondary" onClick={onAIClick} disabled={loading}>
+          <Atom />让 AI 生成
         </Button>
       </div>
       {list.length > 0 && (

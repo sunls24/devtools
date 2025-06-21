@@ -12,3 +12,14 @@ export function copyToClipboard(value: string) {
     .then(() => toast.success("已拷贝至剪贴板"))
     .catch((err) => toast.error(err.message ?? err))
 }
+
+export async function respData(resp: Response): Promise<any> {
+  const res = await resp.json()
+  if (!resp.ok) {
+    return Promise.reject(`${resp.status} ${res.message}`)
+  }
+  if (res.code !== 0) {
+    return Promise.reject(res.message)
+  }
+  return res.data
+}
