@@ -1,36 +1,33 @@
 package api
 
 import (
-	"devtools/internal/openai"
-	"strings"
+	"context"
+	"devtools/config"
+
+	"github.com/labstack/echo/v5"
+	"github.com/sunls24/gox/openai"
 )
 
-func Crontab(ctx *Context) error {
-	desc := ctx.QueryParam("desc")
-	if strings.TrimSpace(desc) == "" {
-		return nil
+type configKey struct{}
+type oaiKey struct{}
+
+func Middleware(cfg *config.Config) echo.MiddlewareFunc {
+	oai := openai.New(cfg.OpenAI.BaseURL, cfg.OpenAI.APIKey)
+	return func(next echo.HandlerFunc) echo.HandlerFunc {
+		return func(c *echo.Context) error {
+			ctx := c.Request().Context()
+			ctx = context.WithValue(ctx, configKey{}, cfg)
+			ctx = context.WithValue(ctx, oaiKey{}, oai)
+			c.SetRequest(c.Request().WithContext(ctx))
+			return next(c)
+		}
 	}
-	resp, err := ctx.oai.Chat(ctx.Request().Context(), openai.ReqChat{
-		Stream:      false,
-		Model:       ctx.cfg.OpenAI.Model,
-		Messages:    buildPrompt(desc),
-		Temperature: 0,
-	})
-	if err != nil {
-		return ctx.ErrMsg(err, "调用 AI 生成异常")
-	}
-	return ctx.Data(resp.Message.Content)
 }
 
-func buildPrompt(desc string) []openai.Message {
-	return []openai.Message{
-		{
-			Role:    openai.RSystem,
-			Content: "You are a professional Crontab generator. Don't do any interpretation, just reply to the expression. If the user sends a crontab, it is returned as is.",
-		},
-		{
-			Role:    openai.RUser,
-			Content: desc,
-		},
-	}
+func Config(ctx context.Context) *config.Config {
+	return ctx.Value(configKey{}).(*config.Config)
+}
+
+func OAI(ctx context.Context) *openai.OpenAI {
+	return ctx.Value(oaiKey{}).(*openai.OpenAI)
 }

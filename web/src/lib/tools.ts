@@ -46,10 +46,3 @@ export function getTool(path: string): ToolItem | undefined {
   }
   return undefined
 }
-
-export function quote(str: string): string {
-  if (str.startsWith('"') && str.endsWith('"')) {
-    return str
-  }
-  return `"${str}"`
-}

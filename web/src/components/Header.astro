@@ -3,7 +3,7 @@ import ThemeIcon from "@/components/ThemeIcon.astro"
 import { Button } from "@/components/ui/button"
 import { VERSION } from "@/lib/constants"
 import clsx from "clsx"
-import { DraftingCompass, Github } from "lucide-react"
+import { DraftingCompass, Github, ToolCase } from "lucide-react"
 
 interface Props {
   wide: boolean
@@ -12,16 +12,17 @@ interface Props {
 const { wide } = Astro.props
 ---
 
-<div class="bg-sidebar border-b py-4 shadow-xs">
+<div class="bg-sidebar border-b py-3 shadow-xs">
   <div
     class={clsx(
       "mx-auto flex w-5/6 items-center px-2",
       wide ? "max-w-7xl" : "max-w-3xl"
     )}
+    transition:name="header"
   >
     <a href="/" class="flex items-center gap-1 font-medium">
-      <DraftingCompass size={22} />
-      <span>百宝箱</span>
+      <ToolCase size={22} />
+      <span>开发者工具箱</span>
       <sup>OL</sup>
     </a>
     <div class="flex-1"></div>
@@ -39,7 +40,9 @@ const { wide } = Astro.props
 
 <script>
   import { GITHUB_URL } from "@/lib/constants"
-  document
-    .getElementById("github")
-    ?.addEventListener("click", () => open(GITHUB_URL))
+  document.addEventListener("astro:page-load", () =>
+    document
+      .getElementById("github")
+      ?.addEventListener("click", () => open(GITHUB_URL))
+  )
 </script>

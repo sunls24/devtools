@@ -23,3 +23,10 @@ export async function respData(resp: Response): Promise<any> {
   }
   return res.data
 }
+
+export function quote(str: string): string {
+  if (str.startsWith('"') && str.endsWith('"')) {
+    return str
+  }
+  return `"${str}"`
+}

@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
-import { quote } from "@/lib/tools"
+import { quote } from "@/lib/utils"
 import JsonView from "@uiw/react-json-view"
 import {
   CodeXml,

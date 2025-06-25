@@ -4,6 +4,7 @@ import { Toaster } from "@/components/ui/sonner"
 import type { ToolItem } from "@/lib/tools"
 
 import "@/styles/global.css"
+import { ClientRouter } from "astro:transitions"
 
 interface Props {
   wide?: boolean
@@ -11,7 +12,7 @@ interface Props {
 }
 
 const { tool, wide = false } = Astro.props
-const title = tool ? tool.name : "百宝箱"
+const title = tool ? tool.name : "开发者工具箱"
 ---
 
 <!doctype html>
@@ -22,7 +23,7 @@ const title = tool ? tool.name : "百宝箱"
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-title" content="百宝箱" />
+    <meta name="apple-mobile-web-app-title" content="devtools" />
     <meta name="apple-mobile-web-app-status-bar-style" content="default" />
     <link
       rel="apple-touch-icon"
@@ -44,7 +45,8 @@ const title = tool ? tool.name : "百宝箱"
       name="description"
       content="一款简洁高效的在线开发者工具箱｜JSON 在线解析及格式化验证，Crontab 执行时间计算，Base64 / URL 编解码。"
     />
-    <title>{`${title} - 在线开发者工具箱`}</title>
+    <title>{`${title} - devtools`}</title>
+    <ClientRouter />
   </head>
   <body class="flex flex-col">
     <Header wide={wide} />
@@ -65,12 +67,16 @@ const title = tool ? tool.name : "百宝箱"
 </style>
 
 <script is:inline>
-  const theme =
-    localStorage.getItem("theme") ??
-    (window.matchMedia("(prefers-color-scheme: dark)").matches
-      ? "dark"
-      : "light")
-  document.documentElement.classList[theme === "dark" ? "add" : "remove"](
-    "dark"
-  )
+  const applyTheme = () => {
+    const theme =
+      localStorage.getItem("theme") ??
+      (window.matchMedia("(prefers-color-scheme: dark)").matches
+        ? "dark"
+        : "light")
+    document.documentElement.classList[theme === "dark" ? "add" : "remove"](
+      "dark"
+    )
+  }
+  applyTheme()
+  document.addEventListener("astro:after-swap", applyTheme)
 </script>

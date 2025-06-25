@@ -9,11 +9,13 @@ import { MoonStar, Sun } from "lucide-react"
 </Button>
 
 <script>
-  document.getElementById("themeToggle")?.addEventListener("click", () => {
-    document.documentElement.classList.toggle("dark")
-    if (typeof localStorage !== "undefined") {
+  import { $theme } from "@/lib/store/store"
+
+  document.addEventListener("astro:page-load", () =>
+    document.getElementById("themeToggle")?.addEventListener("click", () => {
+      document.documentElement.classList.toggle("dark")
       const isDark = document.documentElement.classList.contains("dark")
-      localStorage.setItem("theme", isDark ? "dark" : "light")
-    }
-  })
+      $theme.set(isDark ? "dark" : "light")
+    })
+  )
 </script>

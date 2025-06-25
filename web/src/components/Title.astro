@@ -2,7 +2,16 @@
 const { tool } = Astro.props
 ---
 
-<div class="flex w-fit items-center gap-2 pl-2 font-medium">
-  <img src={tool.image} class="h-5" alt={tool.name} draggable={false} />
-  {tool.name}
+<div
+  class="flex w-fit items-center gap-2 pl-2 font-medium"
+  transition:name={tool.route}
+>
+  <img
+    src={tool.image}
+    class="h-5"
+    alt={tool.name}
+    draggable={false}
+    transition:name={tool.image}
+  />
+  <span transition:name={tool.name}>{tool.name}</span>
 </div>

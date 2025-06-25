@@ -1,11 +1,9 @@
+import { $theme } from "@/lib/store/store"
+import { useStore } from "@nanostores/react"
 import { Toaster as Sonner, type ToasterProps } from "sonner"
-import { useEffect, useState } from "react"
 
 const Toaster = ({ ...props }: ToasterProps) => {
-  const [theme, setTheme] = useState("system")
-
-  useEffect(() => setTheme(localStorage.getItem("theme") ?? theme), [])
-
+  const theme = useStore($theme)
   return (
     <Sonner
       theme={theme as ToasterProps["theme"]}

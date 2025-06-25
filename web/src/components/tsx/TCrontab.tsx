@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button.tsx"
 import { Input } from "@/components/ui/input.tsx"
 import { respData } from "@/lib/utils"
 import { CronExpressionParser } from "cron-parser"
-import { Atom, Calculator, Timer } from "lucide-react"
+import { Calculator, Orbit, Timer } from "lucide-react"
 import React, { useState } from "react"
 import { toast } from "sonner"
 
@@ -67,7 +67,8 @@ function TCrontab() {
           计算执行时间
         </Button>
         <Button variant="secondary" onClick={onAIClick} disabled={loading}>
-          <Atom />让 AI 生成
+          <Orbit />
+          使用 AI 生成
         </Button>
       </div>
       {list.length > 0 && (
