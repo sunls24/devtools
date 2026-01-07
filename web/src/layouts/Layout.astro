@@ -21,7 +21,7 @@ const title = tool ? tool.name : "开发者工具箱"
     <meta charset="UTF-8" />
     <meta name="generator" content={Astro.generator} />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-title" content="devtools" />
     <meta name="apple-mobile-web-app-status-bar-style" content="default" />
@@ -79,4 +79,15 @@ const title = tool ? tool.name : "开发者工具箱"
   }
   applyTheme()
   document.addEventListener("astro:after-swap", applyTheme)
+</script>
+
+<script>
+  import { $navigating } from "@/lib/store/store"
+
+  document.addEventListener("astro:before-preparation", () =>
+    $navigating.set(true)
+  )
+  document.addEventListener("astro:after-preparation", () =>
+    $navigating.set(false)
+  )
 </script>

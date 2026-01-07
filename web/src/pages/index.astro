@@ -21,8 +21,11 @@ import { ExternalLink, Zap } from "lucide-react"
               >
                 <div class="flex items-center gap-2">
                   <img
+                    width=28
+                    height=28
+                    loading="lazy"
+                    decoding="async"
                     src={tool.image}
-                    class="h-7"
                     alt={tool.name}
                     draggable={false}
                     transition:name={tool.image}

@@ -7,8 +7,9 @@ const { tool } = Astro.props
   transition:name={tool.route}
 >
   <img
+    width="24"
+    height="24"
     src={tool.image}
-    class="h-5"
     alt={tool.name}
     draggable={false}
     transition:name={tool.image}

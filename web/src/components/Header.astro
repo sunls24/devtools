@@ -1,9 +1,10 @@
 ---
 import ThemeIcon from "@/components/ThemeIcon.astro"
+import Navigating from "@/components/tsx/Navigating"
 import { Button } from "@/components/ui/button"
 import { VERSION } from "@/lib/constants"
 import clsx from "clsx"
-import { DraftingCompass, Github, ToolCase } from "lucide-react"
+import { Github, ToolCase } from "lucide-react"
 
 interface Props {
   wide: boolean
@@ -12,7 +13,7 @@ interface Props {
 const { wide } = Astro.props
 ---
 
-<div class="bg-sidebar border-b py-3 shadow-xs">
+<div class="bg-sidebar relative border-b py-3 shadow-xs">
   <div
     class={clsx(
       "mx-auto flex w-5/6 items-center px-2",
@@ -36,6 +37,7 @@ const { wide } = Astro.props
       {VERSION}
     </Button>
   </div>
+  <Navigating client:load />
 </div>
 
 <script>
