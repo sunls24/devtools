@@ -13,6 +13,7 @@ function TCrontab() {
   const [loading, setLoading] = useState(false)
 
   function onClick(data?: string) {
+    setList([])
     const expr = (data ?? input).trim()
     if (!expr) {
       return
@@ -28,12 +29,17 @@ function TCrontab() {
   }
 
   function onAIClick() {
+    setList([])
     const desc = input.trim()
     if (!desc) {
       return
     }
     setLoading(true)
-    fetch(`/api/crontab?desc=${desc}`)
+    fetch("/api/crontab", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ desc }),
+    })
       .then(respData)
       .then((data) => {
         setInput(data)

@@ -13,13 +13,13 @@ export function copyToClipboard(value: string) {
     .catch((err) => toast.error(err.message ?? err))
 }
 
-export async function respData(resp: Response): Promise<any> {
-  const res = await resp.json()
-  if (!resp.ok) {
-    return Promise.reject(`${resp.status} ${res.message}`)
+export async function respData(resp: Response): Promise<string> {
+  const res = (await resp.json()) as {
+    message: string
+    data: string
   }
-  if (res.code !== 0) {
-    return Promise.reject(res.message)
+  if (!resp.ok) {
+    throw new Error(res.message)
   }
   return res.data
 }

@@ -3,6 +3,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { copyToClipboard } from "@/lib/utils.ts"
 import { Clipboard, Package, PackageOpen } from "lucide-react"
 import { useEffect, useState } from "react"
+import { toast } from "sonner"
 
 function Encode({
   encode,
@@ -15,20 +16,23 @@ function Encode({
   const [output, setOutput] = useState("")
   const [encoding, setEncoding] = useState(false)
 
-  function encodeClick() {
+  function convert(encoding: boolean) {
+    setEncoding(encoding)
     if (!input) {
+      setOutput("")
       return
     }
-    !encoding && setEncoding(true)
-    setOutput(encode(input))
-  }
-
-  function decodeClick() {
-    if (!input) {
-      return
+    try {
+      setOutput(encoding ? encode(input) : decode(input))
+    } catch (error) {
+      setOutput("")
+      toast.error(
+        encoding ? "编码失败，请检查输入文本" : "解码失败，请检查输入格式",
+        {
+          description: error instanceof Error ? error.message : String(error),
+        }
+      )
     }
-    encoding && setEncoding(false)
-    setOutput(decode(input))
   }
 
   function copyClick() {
@@ -39,10 +43,10 @@ function Encode({
   }
 
   useEffect(() => {
-    if (!output || !encoding) {
+    if (!encoding) {
       return
     }
-    encodeClick()
+    convert(true)
   }, [input])
 
   return (
@@ -56,12 +60,12 @@ function Encode({
       <div className="flex items-center gap-3">
         <Button
           variant={encoding ? "default" : "secondary"}
-          onClick={encodeClick}
+          onClick={() => convert(true)}
         >
           <Package />
           编码
         </Button>
-        <Button variant="secondary" onClick={decodeClick}>
+        <Button variant="secondary" onClick={() => convert(false)}>
           <PackageOpen />
           解码
         </Button>

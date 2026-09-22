@@ -11,11 +11,5 @@ export default defineConfig({
   integrations: [react()],
   vite: {
     plugins: [tailwindcss()],
-    server: {
-      proxy: {
-        // "/api": "http://127.0.0.1:3000",
-        "/api": "https://tool.sunls.de",
-      },
-    },
   },
 })

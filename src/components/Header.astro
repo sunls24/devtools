@@ -4,7 +4,7 @@ import Navigating from "@/components/tsx/Navigating"
 import { Button } from "@/components/ui/button"
 import { VERSION } from "@/lib/constants"
 import clsx from "clsx"
-import { Github, ToolCase } from "lucide-react"
+import { GitFork, ToolCase } from "lucide-react"
 
 interface Props {
   wide: boolean
@@ -33,7 +33,7 @@ const { wide } = Astro.props
       variant="ghost"
       className="gap-1 underline underline-offset-4 has-[>svg]:px-2"
     >
-      <Github />
+      <GitFork />
       {VERSION}
     </Button>
   </div>
